@@ -58,7 +58,7 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <form @submit.prevent="handleSubmit" class="form">
+  <form @submit.prevent="handleSubmit" class="personal-data-form">
     <BaseInput
       v-model="form.fullName"
       label="ФИО"
@@ -99,7 +99,7 @@ const handleSubmit = async () => {
       @blur="validator.email.$touch()"
     />
 
-    <div class="form__btn-wrapper">
+    <div class="personal-data-form__submit">
       <BaseButton type="submit" :disabled="!isFormValid" :loading="isLoading">
         Отправить
       </BaseButton>
@@ -108,7 +108,7 @@ const handleSubmit = async () => {
 </template>
 
 <style scoped>
-.form__btn-wrapper {
+.personal-data-form__submit {
   padding-top: 8px;
   text-align: center;
 }
