@@ -2,7 +2,7 @@
 import BaseButton from '@/components/BaseButton.vue'
 import BaseInput from '@/components/BaseInput.vue'
 import type { FormData } from '@/types/form'
-import { formatPhone, rules } from '@/utils/forms'
+import { formatDate, formatPhone, rules } from '@/utils/forms'
 import { useVuelidate } from '@vuelidate/core'
 import { computed, ref } from 'vue'
 
@@ -40,6 +40,7 @@ const handleSubmit = async () => {
     const savedForms = JSON.parse(localStorage.getItem('forms') || '[]')
     savedForms.push({
       ...form.value,
+      birthDate: formatDate(form.value.birthDate),
       id: Date.now(),
     })
     localStorage.setItem('forms', JSON.stringify(savedForms))
