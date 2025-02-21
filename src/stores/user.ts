@@ -1,11 +1,6 @@
+import type { User } from '@/types/user'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-
-interface User {
-  id: number
-  username: string
-  email: string
-}
 
 export const useUserStore = defineStore('user', () => {
   const user = ref<User | null>(null)
