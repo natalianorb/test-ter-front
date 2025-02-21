@@ -24,6 +24,8 @@ const validator = useVuelidate(rules, form)
 
 const isFormValid = computed(() => !validator.value.$invalid)
 
+const isLoading = ref(false)
+
 const resetForm = () => {
   form.value = { ...initialFormState }
   validator.value.$reset()
@@ -37,16 +39,20 @@ const handleSubmit = async () => {
   }
 
   try {
+    isLoading.value = true
     const savedForms = JSON.parse(localStorage.getItem('forms') || '[]')
     savedForms.push({
       ...form.value,
       birthDate: formatDate(form.value.birthDate),
       id: Date.now(),
     })
+    await new Promise((resolve) => setTimeout(resolve, 500)) // Simulate API call
     localStorage.setItem('forms', JSON.stringify(savedForms))
     resetForm()
   } catch (error) {
     console.error('Ошибка при сохранении формы:', error)
+  } finally {
+    isLoading.value = false
   }
 }
 </script>
@@ -94,7 +100,9 @@ const handleSubmit = async () => {
     />
 
     <div class="form__btn-wrapper">
-      <BaseButton type="submit" :disabled="!isFormValid"> Отправить </BaseButton>
+      <BaseButton type="submit" :disabled="!isFormValid" :loading="isLoading">
+        Отправить
+      </BaseButton>
     </div>
   </form>
 </template>
