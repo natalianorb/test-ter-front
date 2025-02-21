@@ -1,7 +1,7 @@
 <template>
   <button
     class="base-button"
-    :class="[variant, { disabled }]"
+    :class="[{ disabled }]"
     :type="type"
     :disabled="disabled"
     @click="$emit('click')"
@@ -13,12 +13,10 @@
 <script setup lang="ts">
 withDefaults(
   defineProps<{
-    variant?: 'primary' | 'secondary'
     type?: 'button' | 'submit' | 'reset'
     disabled?: boolean
   }>(),
   {
-    variant: 'primary',
     type: 'button',
     disabled: false,
   },
@@ -36,25 +34,25 @@ defineEmits<{
   font-size: 16px;
   cursor: pointer;
   border: none;
-  transition: opacity 0.2s;
+  transition:
+    color 0.3s,
+    background 0.3s;
+  background: linear-gradient(to right, #fff, var(--color-primary-soft));
+  color: rgba(0, 0, 0, 1);
 }
 
 .base-button:hover {
-  opacity: 0.9;
+  color: #fff;
+  background: linear-gradient(to right, var(--color-primary-mute), var(--color-primary));
 }
 
-.primary {
-  background-color: #4299e1;
-  color: white;
+.base-button:active {
+  background: var(--color-primary);
 }
 
-.secondary {
-  background-color: #e2e8f0;
-  color: #4a5568;
-}
-
-.disabled {
-  opacity: 0.5;
+.base-button.disabled {
+  background: #ccc;
+  color: rgba(0, 0, 0, 0.6);
   cursor: not-allowed;
 }
 

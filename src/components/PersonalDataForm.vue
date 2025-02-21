@@ -93,14 +93,15 @@ const handleSubmit = async () => {
       @blur="validator.email.$touch()"
     />
 
-    <BaseButton type="submit" :disabled="!isFormValid"> Отправить </BaseButton>
+    <div class="form__btn-wrapper">
+      <BaseButton type="submit" :disabled="!isFormValid"> Отправить </BaseButton>
+    </div>
   </form>
 </template>
 
 <style scoped>
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.form__btn-wrapper {
+  padding-top: 8px;
+  text-align: center;
 }
 </style>

@@ -35,6 +35,8 @@ defineEmits<{
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
 }
 
 .input-label {
