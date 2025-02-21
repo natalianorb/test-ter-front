@@ -6,12 +6,14 @@ import { formatPhone, rules } from '@/utils/forms'
 import { useVuelidate } from '@vuelidate/core'
 import { computed, ref } from 'vue'
 
-const form = ref<FormData>({
+const initialFormState: FormData = {
   fullName: '',
   birthDate: '',
   phone: '',
   email: '',
-})
+}
+
+const form = ref<FormData>({ ...initialFormState })
 
 const handlePhoneInput = (event: Event) => {
   const input = event.target as HTMLInputElement
@@ -22,13 +24,29 @@ const validator = useVuelidate(rules, form)
 
 const isFormValid = computed(() => !validator.value.$invalid)
 
+const resetForm = () => {
+  form.value = { ...initialFormState }
+  validator.value.$reset()
+}
+
 const handleSubmit = async () => {
   const isFormCorrect = await validator.value.$validate()
   if (!isFormCorrect) {
     console.log('Форма содержит ошибки')
     return
   }
-  console.log('Данные формы:', form.value)
+
+  try {
+    const savedForms = JSON.parse(localStorage.getItem('forms') || '[]')
+    savedForms.push({
+      ...form.value,
+      id: Date.now(),
+    })
+    localStorage.setItem('forms', JSON.stringify(savedForms))
+    resetForm()
+  } catch (error) {
+    console.error('Ошибка при сохранении формы:', error)
+  }
 }
 </script>
 
